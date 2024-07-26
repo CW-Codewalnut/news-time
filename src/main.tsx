@@ -11,7 +11,7 @@ ReactDOM
   .render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        {/* Appling default visual styling to default elements */}
+        {/* Applying default visual styling to default elements */}
         <CssBaseline />
         <App />
       </ThemeProvider>

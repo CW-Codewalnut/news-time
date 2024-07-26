@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks'
 import { Article } from "../../models/article";
 import { useEffect, useState } from "react";
 import SwipeableViews from 'react-swipeable-views';
-import { NewsState, categories, getCategoriesArticals } from "../../redux/news-slice";
+import { NewsState, categories, getCategoriesArticles } from "../../redux/news-slice";
 import ArticlesGridSkeleton from "../../components/ArticlesGridSkeleton";
 
 function Home() {
@@ -17,8 +17,8 @@ function Home() {
 
     useEffect(() => {
         //Do not load the data again if it is loaded
-        if (newsState.categoriesArticals[tab].length === 0) {
-            newsDispatch(getCategoriesArticals(tab));
+        if (newsState.categoriesArticles[tab].length === 0) {
+            newsDispatch(getCategoriesArticles(tab));
         }
     }, [tab]);
 
@@ -42,9 +42,9 @@ function Home() {
             onChangeIndex={onChange}
         >
             {
-                newsState.categoriesArticals
+                newsState.categoriesArticles
                     .map((cat, i) => {
-                        return <BuildArticals 
+                        return <BuildArticles 
                             key={i} 
                             articles={cat} 
                             newsState={newsState} 
@@ -58,7 +58,7 @@ function Home() {
 }
 
 
-function BuildArticals({ newsState, articles }: { newsState: NewsState, articles: Array<Article> }) {
+function BuildArticles({ newsState, articles }: { newsState: NewsState, articles: Array<Article> }) {
 
     if (newsState.isLoading) {
         return <ArticlesGridSkeleton cards={50} />;
@@ -66,7 +66,7 @@ function BuildArticals({ newsState, articles }: { newsState: NewsState, articles
 
     const OtherStates = () => {
          if (newsState.error) {
-            return <Typography>Something went wromng please try again later</ Typography>;
+            return <Typography>Something went wrong please try again later</ Typography>;
         } else if (articles.length === 0) {
             return <Typography>No news found</ Typography>;
         }

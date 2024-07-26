@@ -1,6 +1,7 @@
-import { Paper, Box, Typography, ButtonBase } from "@mui/material";
+import { Paper, Typography, ButtonBase } from "@mui/material";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import { ArticleImage } from "./ArticleImage";
 
 TimeAgo.addDefaultLocale(en);
 
@@ -38,7 +39,7 @@ function ArticleCard({
                 }}
                 elevation={4}
                 >
-                <BuildImage url={imgUrl} />
+                <ArticleImage url={imgUrl} />
                 <Typography
                     textAlign="left"
                     color="#A6A6A6"
@@ -75,23 +76,5 @@ function ArticleCard({
         </ ButtonBase>;
 }
 
-
-function BuildImage({ url }: { url: string | null }) {
-    if (url !== null) {
-        return <Box
-            sx={{
-                height: "200px",
-                width: { xs: "310px", sm: "380px", md: "380px", lg: "380px", xl: "380px" },
-                borderRadius: 4,
-            }}
-            draggable="false"
-            component="img"
-            src={url}
-            alt="thumbnail"
-            loading="lazy"
-        />
-    }
-    return <></>;
-}
 
 export default ArticleCard;

@@ -17,7 +17,7 @@ const newApi = axios.create({
 
 // Slice state
 export interface NewsState {
-  categoriesArticals: [
+  categoriesArticles: [
     Article[],
     Article[],
     Article[],
@@ -28,14 +28,14 @@ export interface NewsState {
     Article[],
   ],
   isLoading: boolean,
-  searchArticals: Article[],
+  searchArticles: Article[],
   isSearching: boolean,
   error: Error | null
 }
 
 // Initial state
 const initialState: NewsState = {
-  categoriesArticals: [
+  categoriesArticles: [
     [],
     [],
     [],
@@ -46,7 +46,7 @@ const initialState: NewsState = {
     []
   ],
   isLoading: false,
-  searchArticals: [],
+  searchArticles: [],
   isSearching: false,
   error: null
 }
@@ -73,14 +73,14 @@ const categoryParams = [
   { "country": "in", "category": "technology" },
 ];
 
-interface GetCategoriesArticalsPayload {
+interface GetCategoriesArticlesPayload {
   categoryIndex: number;
   articles: Article[];
 }
 
-export const getCategoriesArticals
-  : AsyncThunk<GetCategoriesArticalsPayload, number, any> = createAsyncThunk(
-    "news/getCategoriesArticals",
+export const getCategoriesArticles
+  : AsyncThunk<GetCategoriesArticlesPayload, number, any> = createAsyncThunk(
+    "news/getCategoriesArticles",
     async (categoryIndex: number) => {
       const response = await newApi.get(
         "/top-headlines",
@@ -97,14 +97,14 @@ export const newsSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getCategoriesArticals.pending, (state) => { state.isLoading = true });
-    builder.addCase(getCategoriesArticals.fulfilled, (state, actions) => {
+    builder.addCase(getCategoriesArticles.pending, (state) => { state.isLoading = true });
+    builder.addCase(getCategoriesArticles.fulfilled, (state, actions) => {
       state.isLoading = false;
       state.error = null;
       const { categoryIndex, articles } = actions.payload;
-      state.categoriesArticals[categoryIndex] = articles;
+      state.categoriesArticles[categoryIndex] = articles;
     });
-    builder.addCase(getCategoriesArticals.rejected, (state, actions) => {
+    builder.addCase(getCategoriesArticles.rejected, (state, actions) => {
       state.isLoading = false
       state.error = actions.payload as Error;
     });
@@ -114,6 +114,6 @@ export const newsSlice = createSlice({
 
 export const { } = newsSlice.actions;
 
-export const categoriesArticals = (state: RootState) => state.news.categoriesArticals;
+export const categoriesArticles = (state: RootState) => state.news.categoriesArticles;
 
 export default newsSlice.reducer;
